@@ -1,8 +1,4 @@
 import CreateProductUseCase from "./create.product.usecase";
-const input = {
-  name: "Product A",
-  price: 10,
-};
 
 const MockRepository = () => {
   return {
@@ -17,7 +13,11 @@ describe("Unit test create product use case", () => {
   it("should create a product", async () => {
     const productRepository = MockRepository();
     const productCreateUseCase = new CreateProductUseCase(productRepository);
-
+    
+    const input = {
+      name: "Product A",
+      price: 10,
+    };
     const output = await productCreateUseCase.execute(input);
 
     expect(output).toEqual({
@@ -31,8 +31,10 @@ describe("Unit test create product use case", () => {
     const productRepository = MockRepository();
     const productCreateUseCase = new CreateProductUseCase(productRepository);
 
-    input.name = "";
-
+    const input = {
+      name: "",
+      price: 10,
+    };
     await expect(productCreateUseCase.execute(input)).rejects.toThrow(
       "Name is required"
     );
@@ -42,8 +44,11 @@ describe("Unit test create product use case", () => {
     const productRepository = MockRepository();
     const productCreateUseCase = new CreateProductUseCase(productRepository);
 
-    input.price = 0;
-
+    const input = {
+      name: "Product A",
+      price: 0,
+    };
+    
     await expect(productCreateUseCase.execute(input)).rejects.toThrow(
       "Price must be greater than zero"
     );
